@@ -7,6 +7,12 @@ pipeline {
                 checkout scm
             }
         }
+        
+        stage('Test') {
+            steps {
+                echo "try test"
+            }
+        }
 
         stage('Print Message') {
             steps {
