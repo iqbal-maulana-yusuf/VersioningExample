@@ -16,7 +16,7 @@ pipeline {
         
          stage('build') {
             steps {
-                echo "try test"
+                echo "try test case"
             }
         }
 
