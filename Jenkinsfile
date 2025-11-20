@@ -1,29 +1,31 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(false)
+    }
+
     stages {
-        stage('Checkout') {
+
+        stage('Detect Tag') {
+            when { buildingTag() }
             steps {
-                checkout scm
-            }
-        }
-        
-        stage('Test') {
-            steps {
-                echo "try test"
-            }
-        }
-        
-         stage('build') {
-            steps {
-                echo "try test case"
+                echo "Tag detected!"
+                echo "GIT_TAG: ${env.GIT_TAG}"
+                echo "GIT_BRANCH: ${env.GIT_BRANCH}"
             }
         }
 
-        stage('Print Message') {
+        stage('Restore') {
+            when { buildingTag() }
             steps {
-                echo "Build triggered from tag!"
+                echo 'dotnet restore'
             }
+        }
+    }
+    post {
+        always {
+            echo "Build completed"
         }
     }
 }
